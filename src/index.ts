@@ -1,17 +1,33 @@
 export * from "./utils";
-export * from "./namespace";
+export * from "./decorators";
+export * from "./constants";
+export * from "./decorators";
 
 /**
- * @summary Module summary
- * @description Module description
- * @module ts-workspace
+ * @summary Reflection
+ * @description Provides common reflection based functionality
+ * @namespace reflection
  */
 
 /**
- * @summary Namespace summary
- * @description Namespace description
- * @namespace Namespace
- * @memberOf module:ts-workspace
+ * @summary Decorators
+ * @description Provides common reflection based functionality
+ * @namespace decorators
+ * @memberOf reflection
+ */
+
+/**
+ * @summary Equality
+ * @description Provides common reflection based functionality
+ * @namespace equality
+ * @memberOf reflection
+ */
+
+/**
+ * @summary Equality
+ * @description Provides common reflection based functionality
+ * @namespace utils
+ * @memberOf reflection
  */
 
 /**

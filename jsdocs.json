@@ -32,8 +32,8 @@
       "useLongnameInNav": true
     },
     "better-docs": {
-      "name": "ts-template",
-      "title": "TypeScript workspace template",
+      "name": "reflection",
+      "title": "util library with common reflection based functions",
       "hideGenerator": true,
       "useLongnameInNav": true,
       "navLinks": [
@@ -43,7 +43,7 @@
         },
         {
           "label": "Github Repository",
-          "href": "https://github.com/decaf-ts/ts-workspace#readme"
+          "href": "https://github.com/decaf-ts/reflection#readme"
         },
         {
           "label": "Github Profile",
