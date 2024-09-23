@@ -7,7 +7,7 @@ describe("Distribution Tests", () => {
   })
 
   it("reads JS Bundle", () => {
-    const {VERSION} = require("../../dist/ts-workspace.bundle.min.js");
+    const {VERSION} = require("../../dist/reflection.bundle.min.js");
     expect(VERSION).toBeDefined();
   })
 })
