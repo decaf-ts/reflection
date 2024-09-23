@@ -1,17 +1,17 @@
 ![Banner](./workdocs/assets/Banner.png)
-## Typescript Template
+## Reflection
 
 
 
-![Licence](https://img.shields.io/github/license/decaf-ts/ts-workspace.svg?style=plastic)
-![GitHub language count](https://img.shields.io/github/languages/count/decaf-ts/ts-workspace?style=plastic)
-![GitHub top language](https://img.shields.io/github/languages/top/decaf-ts/ts-workspace?style=plastic)
-[![Tests](https://github.com/decaf-ts/ts-workspace/actions/workflows/jest-test.yaml/badge.svg)](http://www.pdmfc.com)
-[![CodeQL](https://github.com/starnowski/posmulten/workflows/CodeQL/badge.svg)](https://github.com/decaf-ts/ts-workspace/actions?query=workflow%3ACodeQL)
+![Licence](https://img.shields.io/github/license/decaf-ts/reflection.svg?style=plastic)
+![GitHub language count](https://img.shields.io/github/languages/count/decaf-ts/reflection?style=plastic)
+![GitHub top language](https://img.shields.io/github/languages/top/decaf-ts/reflection?style=plastic)
+[![Tests](https://github.com/decaf-ts/reflection/actions/workflows/jest-test.yaml/badge.svg)](http://www.pdmfc.com)
+[![CodeQL](https://github.com/starnowski/posmulten/workflows/CodeQL/badge.svg)](https://github.com/decaf-ts/reflection/actions?query=workflow%3ACodeQL)
 
-![Open Issues](https://img.shields.io/github/issues/decaf-ts/ts-workspace.svg)
-![Closed Issues](https://img.shields.io/github/issues-closed/decaf-ts/ts-workspace.svg)
-![Pull Requests](https://img.shields.io/github/issues-pr-closed/decaf-ts/ts-workspace.svg)
+![Open Issues](https://img.shields.io/github/issues/decaf-ts/reflection.svg)
+![Closed Issues](https://img.shields.io/github/issues-closed/decaf-ts/reflection.svg)
+![Pull Requests](https://img.shields.io/github/issues-pr-closed/decaf-ts/reflection.svg)
 ![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 
 ![Line Coverage](workdocs/badges/badge-lines.svg)
@@ -20,9 +20,9 @@
 ![Branch Coverage](workdocs/badges/badge-branches.svg)
 
 
-![Forks](https://img.shields.io/github/forks/decaf-ts/ts-workspace.svg)
-![Stars](https://img.shields.io/github/stars/decaf-ts/ts-workspace.svg)
-![Watchers](https://img.shields.io/github/watchers/decaf-ts/ts-workspace.svg)
+![Forks](https://img.shields.io/github/forks/decaf-ts/reflection.svg)
+![Stars](https://img.shields.io/github/stars/decaf-ts/reflection.svg)
+![Watchers](https://img.shields.io/github/watchers/decaf-ts/reflection.svg)
 
 ![Node Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbadges%2Fshields%2Fmaster%2Fpackage.json&label=Node&query=$.engines.node&colorB=blue)
 ![NPM Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbadges%2Fshields%2Fmaster%2Fpackage.json&label=NPM&query=$.engines.npm&colorB=purple)
@@ -74,9 +74,6 @@ If this is the first time you are running this command it will also:
  - creates a `.token` file which you can leave empty unless you have private dependencies or publish to private registries
  - delete this 'first run script' file and npm call from the `package.json`;
  - try to commit the updated `package.json` and deleted files (having ssh access helps here);
-## Linting
-
-This repo comes with eslint + prettier preconfigured to the default standards
 ## Testing
 
 Preconfigured Jest based testing:
@@ -88,103 +85,13 @@ Preconfigured Jest based testing:
 - publishes coverage result to docs;
 - ignores `cli.ts` from coverage since that is an executable file;
 - defines the coverage threshold in `jest.config.ts`;
-### Releases
-
-This repository automates releases in the following manner:
-
-- run `npm run release -- <major|minor|patch|version> <message>`:
-  - if arguments are missing you will be prompted for them;
-- it will run `npm run prepare-release` npm script;
-- it will commit all changes;
-- it will push the new tag;
-
-If publishing to a private repo's npm registry, make sure you add to your `package.json`:
-
-```json
-{
-  "publishConfig": {
-    "<SCOPE>:registry": " https://<REGISTRY>/api/v4/projects/<PROJECT_ID>/packages/npm/"
-  }
-}
-```
-
-Where:
-
-- `<SCOPE>` - Is the scope of your package;
-- `<REGISTRY>` - your registry host;
-- `<PROJECT_ID>` - you project ID number (easy to grab via UI in gitlab or by
-  running `$("meta[name=octolytics-dimension-repository_id]").getAttribute('content')` in the repository page in github)
-  ;
-
-### Publishing
-
-Unless the `-no-ci` flag is passed in the commit message to the `npm run release` command, publishing will be handled
-automatically by github/gitlab (triggered by the tag).
-
-When the `-no-ci` flag is passed then you can:
-
-- run `npm run publish`. This command assumes :
-  - you have previously run the `npm run release`;
-  - you have you publishing properly configured in `npmrc` and `package.json`;
-  - The token for any special access required is stored in the `.token` file;
- 
-## Continuous Integration/Deployment
-
-While the implementationfor gitlab and github are not perfectly matched, they are perfectly usable.
-
-The template comes with ci/cd for :
-  - gitlab (with caching for performance):
-    - stages: 
-      - dependencies: Installs dependencies (on `package-lock.json` changes, caches node modules);
-      - build: builds the code (on `src/*` changes, caches `lib` and `dist`);
-      - test: tests the code (on `src/*`, `test/*` changes, caches `workdocs/{resources, badges, coverage}`);
-      - deploy: 
-        - deploys to package registry on a tag (public|private);
-        - deploys docker image to docker registry (private);
-        - Deploys the documentation to the repository pages;
-  - github:
-    - jest-test: standard `install -> build -> test` loop;
-    - jest-coverage: extracts coverage from the tests;
-    - codeql-analysis: Code quality analisys;
-    - pages: builds the documentation and deploys to github pages
-    - release-on-tag: issues a release when the tag does not contain `-no-ci` string
-    - publish-on-release: publishes to package registry when the tag does not contain the `-no-ci` string
-    - Requires Variables:
-      - CONSECUTIVE_ACTION_TRIGGER: secret to enable actions to trigger other actions;
-      - NPM_TOKEN: npm/docker registry token
 ## Considerations
  - Setup for a linux based environment (Sorry windows users. use WSL... or just change already);
  - Setup for node 20, but will work at least with 16;
  - Requires docker to build documentation (drawings and PlantUML)
-## Documentation
-
-The repository proposes a way to generate documentation that while still not ideal, produces verys consitest results.
-
-In the code you see an example on how to properly document each code object, but the overall structure is:
-  - each package is a `@module`;
-  - Classes and Interfaces are categorized into `@category` and `@subcategory`;
-  - All other objects are categorized by `@namespace` and `@memberOf`;
-  - Enums and const are declared as `@const` and both must describe their properties as `@property` (when constants are objects);
-  - Interfaces must declare their methods `@method`;
-
-There are 3 steps the generating the documentation (automated in CI):
- - `npm run drawings` - generates png files from each drawing in the `workdocs/drawings` folder and moves them to the `workdocs/resources` folder (requires Docker);
- - `npm run uml` - generates png files from each PlantUML diagram in the `workdocs/uml` folder and moves them to the `workdocs/resources` folder (requires Docker);
- - `npm run docs` - this has several stages, defined under the `gulp docs` (gulpfile.js):
-   - compiles the Readme file via md compile:
-     - enables keeping separate files for sections that are then joined into a single file;
-     - Allows keeping specific files in the jsdocs tutorial folder so they show up on their own menu;
-   - compiles the documentation from the source code using jsdocs:
-     - uses the better docs template with the category and component plugins
-     - uses the mermaid jsdoc plugin to embue uml diagrams in the docs
-     - includes a nav link to the test coverage results;
-   - copies the jsdoc and mds to `/docs`;
-   - copies the `./workdocs/{drawings, uml, assets, resources}` to `./docs`;
-
-The produced `docs` folder contains the resulting documentation;
 ### Related
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=ts-workspace)](https://github.com/decaf-ts/ts-workspace)
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decorator-validation)](https://github.com/decaf-ts/decorator-validation)
 ### Social
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/decaf-ts/)
