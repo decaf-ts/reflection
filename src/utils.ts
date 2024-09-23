@@ -1,7 +1,7 @@
 import "reflect-metadata";
-import {ReflectionKeys} from "./constants";
-import {isEqual} from "./equality";
-import {DecoratorMetadata} from "./types";
+import { ReflectionKeys } from "./constants";
+import { isEqual } from "./equality";
+import { DecoratorMetadata } from "./types";
 
 /**
  * @summary Util function to retrieve the decorators for the provided Property
@@ -39,7 +39,8 @@ export function getPropertyDecorators(
       .filter((key) => {
         if (ignoreType) return key.toString().startsWith(annotationPrefix);
         return (
-          key === ReflectionKeys.TYPE || key.toString().startsWith(annotationPrefix)
+          key === ReflectionKeys.TYPE ||
+          key.toString().startsWith(annotationPrefix)
         );
       })
       .reduce((values, key) => {
@@ -135,9 +136,9 @@ export function getTypeFromDecorator(
  *
  * @function getAllPropertyDecorators
  *
- * @memberOf reflection.utils
+ * @memberOf reflection
  */
-export function getAllPropertyDecorators<T extends Object>(
+export function getAllPropertyDecorators<T extends object>(
   model: T,
   ...prefixes: string[]
 ): Record<string, DecoratorMetadata[]> | undefined {

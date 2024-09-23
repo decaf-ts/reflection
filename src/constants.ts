@@ -1,3 +1,3 @@
 export enum ReflectionKeys {
-  TYPE = "design:type"
+  TYPE = "design:type",
 }

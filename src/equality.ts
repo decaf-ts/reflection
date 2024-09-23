@@ -8,8 +8,7 @@
  * @param {string} [propsToIgnore]
  *
  * @function isEqual
- * @memberOf module:Reflection.Equality
- * @category Validation
+ * @memberOf reflection
  */
 export function isEqual(a: any, b: any, ...propsToIgnore: string[]): boolean {
   if (a === b) return true;
