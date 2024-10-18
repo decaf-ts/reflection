@@ -22,14 +22,14 @@ export function getPropertyDecorators(
   propertyName: string | symbol,
   ignoreType: boolean = false,
   recursive = true,
-  accumulator?: DecoratorMetadata[],
+  accumulator?: DecoratorMetadata[]
 ): { prop: string; decorators: DecoratorMetadata[] } {
   const getPropertyDecoratorsForModel = function (
     annotationPrefix: string,
     target: any,
     propertyName: string | symbol,
     ignoreType: boolean = false,
-    accumulator?: DecoratorMetadata[],
+    accumulator?: DecoratorMetadata[]
   ): { prop: string; decorators: DecoratorMetadata[] } {
     // get info about keys that used in current property
     const keys: any[] = Reflect.getMetadataKeys(target, propertyName);
@@ -66,7 +66,7 @@ export function getPropertyDecorators(
       target,
       propertyName,
       ignoreType,
-      accumulator,
+      accumulator
     );
 
   const trim = function (items: DecoratorMetadata[]) {
@@ -75,7 +75,9 @@ export function getPropertyDecorators(
       if (item.key in cache) {
         if (!isEqual(item.props, cache[item.key]))
           console.log(
-            `Found a similar decorator for the ${item.key} property of a ${target.constructor.name} model but with different attributes. The original one will be kept`,
+            `Found a similar decorator for the ${item.key} property` +
+              `of a ${target.constructor.name} model but with different attributes.` +
+              "The original one will be kept"
           );
         return false;
       }
@@ -99,7 +101,7 @@ export function getPropertyDecorators(
     propertyName,
     true,
     recursive,
-    result.decorators,
+    result.decorators
   );
 }
 
@@ -117,7 +119,7 @@ export function getPropertyDecorators(
  */
 export function getTypeFromDecorator(
   model: any,
-  propKey: string | symbol,
+  propKey: string | symbol
 ): string | undefined {
   const decorators: { prop: string | symbol; decorators: any[] } =
     getPropertyDecorators(ReflectionKeys.TYPE, model, propKey, false);
@@ -150,7 +152,7 @@ export function getAllPropertyDecorators<T extends object>(
   function pushOrCreate(
     accum: Record<string, DecoratorMetadata[]>,
     key: string,
-    decorators: DecoratorMetadata[],
+    decorators: DecoratorMetadata[]
   ): void {
     if (!decorators || !decorators.length) return;
     if (!accum[key]) accum[key] = [];
@@ -169,7 +171,7 @@ export function getAllPropertyDecorators<T extends object>(
       });
       return accum;
     },
-    undefined,
+    undefined
   );
 }
 
@@ -189,7 +191,7 @@ export function getAllPropertyDecorators<T extends object>(
 export function getAllProperties(
   obj: Record<any, any>,
   climbTree = true,
-  stopAt = "Object",
+  stopAt = "Object"
 ) {
   const allProps: string[] = [];
   let curr: Record<any, any> = obj;
@@ -219,7 +221,7 @@ export function getAllProperties(
  */
 export function getClassDecorators(
   annotationPrefix: string,
-  target: any,
+  target: any
 ): { key: string; props: any }[] {
   const keys: any[] = Reflect.getOwnMetadataKeys(target.constructor);
 
@@ -277,7 +279,7 @@ export function checkTypes(value: any, acceptedTypes: string[]) {
  */
 export function evaluateDesignTypes(
   value: any,
-  types: string | string[] | { name: string },
+  types: string | string[] | { name: string }
 ) {
   switch (typeof types) {
     case "string":

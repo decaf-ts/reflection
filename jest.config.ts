@@ -1,15 +1,13 @@
 module.exports = {
   verbose: true,
-  transform: {'^.+\\.ts?$': 'ts-jest'},
-  testEnvironment: 'node',
-  testRegex: '/tests/.*\\.(test|spec)\\.(ts|tsx)$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  transform: { "^.+\\.ts?$": "ts-jest" },
+  testEnvironment: "node",
+  testRegex: "/tests/.*\\.(test|spec)\\.(ts|tsx)$",
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   collectCoverage: true,
   coverageDirectory: "./workdocs/coverage",
-  collectCoverageFrom: ['src/**/*.{ts,jsx}'],
-  coveragePathIgnorePatterns: [
-    "src/cli.ts"
-  ],
+  collectCoverageFrom: ["src/**/*.{ts,jsx}"],
+  coveragePathIgnorePatterns: ["src/cli.ts"],
   // coverageThreshold: {
   //   global: {
   //     branches: 70,
@@ -18,14 +16,15 @@ module.exports = {
   //     statements: 90
   //   }
   // },
-  coverageReporters: [
-    "json-summary",
-    "text-summary",
-    "text",
-    "html"
-  ],
+  coverageReporters: ["json-summary", "text-summary", "text", "html"],
   reporters: [
     "default",
-    ["jest-junit", {outputDirectory: './workdocs/coverage', outputName: "junit-report.xml"}]
-  ]
+    [
+      "jest-junit",
+      {
+        outputDirectory: "./workdocs/coverage",
+        outputName: "junit-report.xml",
+      },
+    ],
+  ],
 };

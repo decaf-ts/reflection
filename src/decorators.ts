@@ -28,7 +28,7 @@ export function metadata<V>(key: string, value: V): CustomDecorator<V> {
   return (
     target: object,
     propertyKey?: string | symbol,
-    descriptor?: PropertyDescriptor,
+    descriptor?: PropertyDescriptor
   ) => {
     if (descriptor) {
       Reflect.defineMetadata(key, value, descriptor.value); // method
@@ -52,11 +52,11 @@ export function metadata<V>(key: string, value: V): CustomDecorator<V> {
 export function apply(
   ...decorators: Array<ClassDecorator | MethodDecorator | PropertyDecorator>
 ) {
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   return <TFunction extends Function, Y>(
     target: TFunction | object,
     propertyKey?: string | symbol,
-    descriptor?: TypedPropertyDescriptor<Y>,
+    descriptor?: TypedPropertyDescriptor<Y>
   ) => {
     for (const decorator of decorators) {
       if (target instanceof Function && !descriptor) {
@@ -66,7 +66,7 @@ export function apply(
       (decorator as MethodDecorator | PropertyDecorator)(
         target,
         propertyKey as string | symbol,
-        descriptor as TypedPropertyDescriptor<Y>,
+        descriptor as TypedPropertyDescriptor<Y>
       );
     }
   };
