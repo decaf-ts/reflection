@@ -14,8 +14,7 @@ import { DecoratorMetadata } from "./types";
  * @param {DecoratorMetadata[]} [accumulator] used when recursive is true, to cache decorators while it climbs the prototypal tree
  *
  * @function getPropertyDecorators
- * @memberOf reflection.utils
- * @category Reflection
+ * @memberOf module:reflection.utils
  */
 export function getPropertyDecorators(
   annotationPrefix: string,
@@ -106,13 +105,15 @@ export function getPropertyDecorators(
 
 /**
  * @summary gets the prop type from the decorator
+ * @description uses the metadata to discover the type of the object stored under model[proKey]
+ *
  * @param {any} model
  * @param {string | symbol} propKey
  * @return {string | undefined}
  *
  * @function geTypeFromDecorators
  *
- * @memberOf reflection.utils
+ * @memberOf module:reflection.utils
  */
 export function getTypeFromDecorator(
   model: any,
@@ -131,12 +132,14 @@ export function getTypeFromDecorator(
 /**
  * @summary Retrieves the decorators for an object's properties prefixed by {@param prefixes}
  *
+ * @typedef T extends object
+ *
  * @param {T} model
  * @param {string[]} prefixes
  *
  * @function getAllPropertyDecorators
  *
- * @memberOf reflection
+ * @memberOf module:reflection.utils
  */
 export function getAllPropertyDecorators<T extends object>(
   model: T,
@@ -181,7 +184,7 @@ export function getAllPropertyDecorators<T extends object>(
  *
  * @function getAllProperties
  *
- * @memberOf reflection.utils
+ * @memberOf module:reflection.utils
  */
 export function getAllProperties(
   obj: Record<any, any>,
@@ -212,8 +215,7 @@ export function getAllProperties(
  * @summary Util function to retrieve the Class decorators
  *
  * @function getClassDecorators
- * @memberOf reflection.utils
- * @category Reflection
+ * @memberOf module:reflection.utils
  */
 export function getClassDecorators(
   annotationPrefix: string,
@@ -241,8 +243,7 @@ export function getClassDecorators(
  * @return {boolean} true for a match, false otherwise
  *
  * @function checkType
- * @memberOf reflection.utils
- * @category Validation
+ * @memberOf module:reflection.utils
  */
 export function checkType(value: any, acceptedType: string) {
   if (typeof value === acceptedType) return true;
@@ -259,8 +260,7 @@ export function checkType(value: any, acceptedType: string) {
  * @return {boolean} true if any is a match, false otherwise
  *
  * @function checkTypes
- * @memberOf reflection.utils
- * @category Validation
+ * @memberOf module:reflection.utils
  */
 export function checkTypes(value: any, acceptedTypes: string[]) {
   return !acceptedTypes.every((t) => !checkType(value, t));
@@ -273,8 +273,7 @@ export function checkTypes(value: any, acceptedTypes: string[]) {
  * @param {string | string[] | {name: string}} types
  *
  * @function evaluateDesignTypes
- * @memberOf reflection.utils
- * @category Validation
+ * @memberOf module:reflection.utils
  */
 export function evaluateDesignTypes(
   value: any,

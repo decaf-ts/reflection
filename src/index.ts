@@ -7,28 +7,28 @@ export * from "./utils";
 /**
  * @summary Reflection
  * @description Provides common reflection based functionality
- * @namespace reflection
+ * @module reflection
  */
 
 /**
  * @summary Decorators
  * @description Provides common reflection based functionality
  * @namespace decorators
- * @memberOf reflection
+ * @memberOf module:reflection
  */
 
 /**
  * @summary Equality
  * @description Provides common reflection based functionality
  * @namespace equality
- * @memberOf reflection
+ * @memberOf module:reflection
  */
 
 /**
  * @summary Equality
  * @description Provides common reflection based functionality
  * @namespace utils
- * @memberOf reflection
+ * @memberOf module:reflection
  */
 
 /**

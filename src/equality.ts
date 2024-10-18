@@ -5,10 +5,10 @@
  *
  * @param {any} a
  * @param {any} b
- * @param {string} [propsToIgnore]
+ * @param {string} [propsToIgnore] a list of properties to ignore on the objects
  *
  * @function isEqual
- * @memberOf reflection
+ * @memberOf module:reflection.equality
  */
 export function isEqual(a: any, b: any, ...propsToIgnore: string[]): boolean {
   if (a === b) return true;

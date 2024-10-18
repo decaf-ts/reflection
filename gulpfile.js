@@ -169,7 +169,7 @@ function makeDocs(){
     const copyFiles = (source, destination) => {
         return function copyFiles(){
             try {
-                return src(source + "/**/*" , { base: source }).pipe(dest(destination));
+                return src(source + "/**/*" , { base: source, encoding: false }).pipe(dest(destination));
             } catch (e){
                 throw e
             }
@@ -185,18 +185,18 @@ function makeDocs(){
     }
 
 
-    return series(compileReadme, compileDocs, parallel(...[
+    return series(compileReadme, compileDocs, series(...[
             {
                 src: "workdocs/assets",
-                dest:  "./docs/assets"
+                dest:  "./docs/workdocs/assets"
             },
             {
                 src: "workdocs/coverage",
-                dest:  "./docs/coverage"
+                dest:  "./docs/workdocs/coverage"
             },
             {
                 src: "workdocs/badges",
-                dest:  "./docs/badges"
+                dest:  "./docs/workdocs/badges"
             }
         ].map(e => copyFiles(e.src, e.dest)))
     )

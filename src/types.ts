@@ -1,6 +1,6 @@
 /**
  * @summary Type for decorator metadata
- * @memberOf reflection
+ * @memberOf module:reflection.decorators
  */
 export type DecoratorMetadata<T = Record<string, any>> = {
   key: string;
