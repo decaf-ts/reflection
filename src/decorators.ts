@@ -25,7 +25,7 @@ export type CustomDecorator<V> = MethodDecorator &
  * @memberOf module:reflection.decorators
  */
 export function metadata<V>(key: string, value: V): CustomDecorator<V> {
-  return (
+  return ((
     target: object,
     propertyKey?: string | symbol,
     descriptor?: PropertyDescriptor
@@ -37,7 +37,7 @@ export function metadata<V>(key: string, value: V): CustomDecorator<V> {
     } else {
       Reflect.defineMetadata(key, value, target); // class
     }
-  };
+  }) as any;
 }
 
 /**
@@ -53,7 +53,7 @@ export function apply(
   ...decorators: Array<ClassDecorator | MethodDecorator | PropertyDecorator>
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  return <TFunction extends Function, Y>(
+  return (<TFunction extends Function, Y>(
     target: TFunction | object,
     propertyKey?: string | symbol,
     descriptor?: TypedPropertyDescriptor<Y>
@@ -69,5 +69,5 @@ export function apply(
         descriptor as TypedPropertyDescriptor<Y>
       );
     }
-  };
+  }) as any;
 }
