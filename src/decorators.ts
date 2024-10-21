@@ -3,7 +3,6 @@ import "reflect-metadata";
 /**
  * @summary Holds all possible decorators
  * @description alias for {@link MethodDecorator} or {@link PropertyDecorator} or {@link ClassDecorator}
- * @typedef V any
  * @typedef CustomDecorator<V>
  *
  * @memberOf module:reflection.decorators
@@ -27,7 +26,7 @@ export type CustomDecorator<V> = MethodDecorator &
 export function metadata<V>(key: string, value: V): CustomDecorator<V> {
   return (
     target: object,
-    propertyKey?: string | symbol,
+    propertyKey?: any,
     descriptor?: PropertyDescriptor
   ) => {
     if (descriptor) {
