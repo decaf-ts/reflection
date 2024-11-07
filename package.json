@@ -85,7 +85,7 @@
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^7.0.0"
   },
-  "peerDependencies": {
+  "dependencies": {
     "reflect-metadata": "^0.2.1"
   }
 }
