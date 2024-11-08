@@ -23,12 +23,8 @@ export type CustomDecorator<V> = MethodDecorator &
  *
  * @memberOf module:reflection.decorators
  */
-export function metadata<V>(key: string, value: V): CustomDecorator<V> {
-  return (
-    target: object,
-    propertyKey?: any,
-    descriptor?: PropertyDescriptor
-  ) => {
+export function metadata<V>(key: string, value: V) {
+  return (target: object, propertyKey?: any, descriptor?: any) => {
     if (descriptor) {
       Reflect.defineMetadata(key, value, descriptor.value); // method
     } else if (propertyKey) {
