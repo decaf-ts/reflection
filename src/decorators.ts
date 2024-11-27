@@ -7,10 +7,6 @@ import "reflect-metadata";
  *
  * @memberOf module:reflection.decorators
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export type CustomDecorator<V> = MethodDecorator &
-  ClassDecorator &
-  PropertyDecorator;
 
 /**
  * @summary Decorator that assigns metadata to the class/method using the
