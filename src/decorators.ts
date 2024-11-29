@@ -20,7 +20,12 @@ export function metadata<V>(key: string, value: V) {
     if (descriptor) {
       Reflect.defineMetadata(key, value, descriptor.value as object); // method
     } else if (propertyKey) {
-      Reflect.defineMetadata(key, value, target, propertyKey); // property
+      Reflect.defineMetadata(
+        key,
+        value,
+        target,
+        propertyKey as string | symbol
+      ); // property
     } else {
       Reflect.defineMetadata(key, value, target); // class
     }
