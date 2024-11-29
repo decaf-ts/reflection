@@ -14,7 +14,7 @@ import "reflect-metadata";
 export function metadata<V>(key: string, value: V) {
   return (
     target: object,
-    propertyKey?: string | symbol,
+    propertyKey?: string | symbol | unknown,
     descriptor?: TypedPropertyDescriptor<unknown>
   ) => {
     if (descriptor) {
@@ -39,7 +39,11 @@ export function metadata<V>(key: string, value: V) {
 export function apply(
   ...decorators: Array<ClassDecorator | MethodDecorator | PropertyDecorator>
 ) {
-  return (target: object, propertyKey?: any, descriptor?: any) => {
+  return (
+    target: object,
+    propertyKey?: string | symbol | unknown,
+    descriptor?: TypedPropertyDescriptor<unknown>
+  ) => {
     for (const decorator of decorators) {
       if (target instanceof Function && !descriptor) {
         (decorator as ClassDecorator)(target);
