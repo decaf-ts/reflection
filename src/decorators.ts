@@ -15,7 +15,7 @@ export function metadata<V>(key: string, value: V) {
   return (
     target: object,
     propertyKey?: string | symbol | unknown,
-    descriptor?: TypedPropertyDescriptor<unknown>
+    descriptor?: PropertyDescriptor
   ) => {
     if (descriptor) {
       Reflect.defineMetadata(key, value, descriptor.value as object); // method
@@ -47,7 +47,7 @@ export function apply(
   return (
     target: object,
     propertyKey?: string | symbol | unknown,
-    descriptor?: TypedPropertyDescriptor<unknown>
+    descriptor?: PropertyDescriptor
   ) => {
     for (const decorator of decorators) {
       if (target instanceof Function && !descriptor) {
