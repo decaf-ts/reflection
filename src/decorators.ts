@@ -1,14 +1,6 @@
 import "reflect-metadata";
 
 /**
- * @summary Holds all possible decorators
- * @description alias for {@link MethodDecorator} or {@link PropertyDecorator} or {@link ClassDecorator}
- * @typedef CustomDecorator<V>
- *
- * @memberOf module:reflection.decorators
- */
-
-/**
  * @summary Decorator that assigns metadata to the class/method using the
  * specified `key`.
  *
@@ -20,9 +12,13 @@ import "reflect-metadata";
  * @memberOf module:reflection.decorators
  */
 export function metadata<V>(key: string, value: V) {
-  return (target: object, propertyKey?: any, descriptor?: any) => {
+  return (
+    target: object,
+    propertyKey?: string | symbol,
+    descriptor?: TypedPropertyDescriptor<unknown>
+  ) => {
     if (descriptor) {
-      Reflect.defineMetadata(key, value, descriptor.value); // method
+      Reflect.defineMetadata(key, value, descriptor.value as object); // method
     } else if (propertyKey) {
       Reflect.defineMetadata(key, value, target, propertyKey); // property
     } else {
@@ -51,8 +47,8 @@ export function apply(
       }
       (decorator as MethodDecorator | PropertyDecorator)(
         target,
-        propertyKey as any,
-        descriptor as any
+        propertyKey as string | symbol,
+        descriptor as TypedPropertyDescriptor<unknown>
       );
     }
   };

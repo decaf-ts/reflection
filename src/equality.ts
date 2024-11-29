@@ -10,7 +10,11 @@
  * @function isEqual
  * @memberOf module:reflection.equality
  */
-export function isEqual(a: any, b: any, ...propsToIgnore: string[]): boolean {
+export function isEqual(
+  a: unknown,
+  b: unknown,
+  ...propsToIgnore: string[]
+): boolean {
   if (a === b) return true;
   if (a instanceof Date && b instanceof Date)
     return a.getTime() === b.getTime();
@@ -19,7 +23,11 @@ export function isEqual(a: any, b: any, ...propsToIgnore: string[]): boolean {
   if (a === null || a === undefined || b === null || b === undefined)
     return false;
   if (typeof a !== typeof b) return false;
-  if (a.prototype !== b.prototype) return false;
+  if (
+    (a as { prototype: unknown }).prototype !==
+    (b as { prototype: unknown }).prototype
+  )
+    return false;
   const keys = Object.keys(a).filter((k) => propsToIgnore.indexOf(k) === -1);
   if (
     keys.length !==
@@ -28,6 +36,11 @@ export function isEqual(a: any, b: any, ...propsToIgnore: string[]): boolean {
     return false;
   return keys.every(
     (k) =>
-      propsToIgnore.indexOf(k) !== -1 || isEqual(a[k], b[k], ...propsToIgnore),
+      propsToIgnore.indexOf(k) !== -1 ||
+      isEqual(
+        (a as Record<string, unknown>)[k],
+        b as Record<string, unknown>,
+        ...propsToIgnore
+      )
   );
 }

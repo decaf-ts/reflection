@@ -1,8 +1,8 @@
 export * from "./constants";
 export * from "./decorators";
 export * from "./equality";
+export * from "./Reflection";
 export * from "./types";
-export * from "./utils";
 
 /**
  * @summary Reflection
