@@ -25,7 +25,7 @@ export class Reflection {
    * @static
    */
   private static checkType(value: unknown, acceptedType: string) {
-    if (typeof value === acceptedType) return true;
+    if (typeof value === acceptedType.toLowerCase()) return true;
     if (typeof value !== "object") return false;
     return (
       (value as object).constructor &&

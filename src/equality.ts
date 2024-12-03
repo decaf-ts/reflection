@@ -22,12 +22,15 @@ export function isEqual(
     return a === b;
   if (a === null || a === undefined || b === null || b === undefined)
     return false;
-  if (typeof a !== typeof b) return false;
+  if (typeof a !== typeof b) {
+    return false;
+  }
   if (
     (a as { prototype: unknown }).prototype !==
     (b as { prototype: unknown }).prototype
-  )
+  ) {
     return false;
+  }
   const keys = Object.keys(a).filter((k) => propsToIgnore.indexOf(k) === -1);
   if (
     keys.length !==
@@ -39,7 +42,7 @@ export function isEqual(
       propsToIgnore.indexOf(k) !== -1 ||
       isEqual(
         (a as Record<string, unknown>)[k],
-        b as Record<string, unknown>,
+        (b as Record<string, unknown>)[k],
         ...propsToIgnore
       )
   );
