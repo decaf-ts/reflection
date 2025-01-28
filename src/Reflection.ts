@@ -63,7 +63,7 @@ export class Reflection {
       case "string":
         return this.checkType(value, types);
       case "object":
-        if (Array.isArray(types)) return this.checkTypes(value, types);
+        if (Array.isArray(types)) return Reflection.checkTypes(value, types);
         return true;
       case "function":
         if (types.name && types.name !== "Object")
@@ -165,7 +165,7 @@ export class Reflection {
           const decorators: {
             prop: string;
             decorators: DecoratorMetadata[];
-          } = this.getPropertyDecorators(p, model, propKey, index !== 0);
+          } = Reflection.getPropertyDecorators(p, model, propKey, index !== 0);
           if (!accum) accum = {};
           pushOrCreate(accum, propKey, decorators.decorators);
         });
@@ -190,7 +190,12 @@ export class Reflection {
     propKey: string | symbol
   ): string | undefined {
     const decorators: { prop: string | symbol; decorators: unknown[] } =
-      this.getPropertyDecorators(ReflectionKeys.TYPE, model, propKey, false);
+      Reflection.getPropertyDecorators(
+        ReflectionKeys.TYPE,
+        model,
+        propKey,
+        false
+      );
     if (!decorators || !decorators.decorators) return;
 
     const typeDecorator: DecoratorMetadata =
@@ -290,7 +295,7 @@ export class Reflection {
     }
 
     // We choose to ignore type here, because in inheritance the expected type is from the lowest child class
-    return this.getPropertyDecorators(
+    return Reflection.getPropertyDecorators(
       annotationPrefix,
       Object.getPrototypeOf(target.constructor),
       propertyName,
