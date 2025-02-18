@@ -26,6 +26,7 @@ export class Reflection {
    */
   private static checkType(value: unknown, acceptedType: string) {
     if (typeof value === acceptedType.toLowerCase()) return true;
+    if (typeof value === "undefined") return false;
     if (typeof value !== "object") return false;
     return (
       (value as object).constructor &&
@@ -75,9 +76,9 @@ export class Reflection {
   }
 
   /**
-   * @summary Retrieves all properties of an object
-   * @description
-   *  - and of all its prototypes if {@param climbTree} until it reaches {@param stopAt} (or ends the prototype chain)
+   * @description Retrieves all properties of an object
+   * @summary
+   * if {@param climbTree} it will crawl the prototype tree until it reaches {@param stopAt} (or ends the prototype chain)
    *
    * @param {Record<string, unknown>} obj
    * @param {boolean} [climbTree] default to true
@@ -87,8 +88,8 @@ export class Reflection {
    */
   static getAllProperties(
     obj: Record<string, unknown>,
-    climbTree = true,
-    stopAt = "Object"
+    climbTree: boolean = true,
+    stopAt: string = "Object"
   ) {
     const allProps: string[] = [];
     let curr: Record<string, unknown> = obj;
