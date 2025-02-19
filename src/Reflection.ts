@@ -91,7 +91,7 @@ export class Reflection {
     climbTree: boolean = true,
     stopAt: string = "Object"
   ) {
-    const allProps: string[] = [];
+    const allProps = new Set<string>();
     let curr: Record<string, unknown> = obj;
 
     const keepAtIt = function () {
@@ -103,12 +103,10 @@ export class Reflection {
     };
 
     do {
-      const props = Object.getOwnPropertyNames(curr);
-      props.forEach(function (prop) {
-        if (allProps.indexOf(prop) === -1) allProps.push(prop);
-      });
+      Object.getOwnPropertyNames(curr).forEach(prop => allProps.add(prop));
     } while (keepAtIt());
-    return allProps;
+
+    return Array.from(allProps);
   }
 
   /**
@@ -123,17 +121,18 @@ export class Reflection {
     target: object
   ): { key: string; props: unknown }[] {
     const keys: string[] = Reflect.getOwnMetadataKeys(target.constructor);
+    const result: { key: string; props: unknown }[] = [];
 
-    return keys
-      .filter((key) => key.toString().startsWith(annotationPrefix))
-      .reduce((values: { key: string; props: unknown }[], key) => {
-        // get metadata value
-        const currValues = {
-          key: key.substring(annotationPrefix.length),
-          props: Reflect.getMetadata(key, target.constructor),
-        };
-        return values.concat(currValues);
-      }, []);
+    for (const key of keys) {
+      if (key.startsWith(annotationPrefix)) {
+        result.push({
+          key: key.slice(annotationPrefix.length),
+          props: Reflect.getMetadata(key, target.constructor)
+        });
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -148,32 +147,24 @@ export class Reflection {
     model: M,
     ...prefixes: string[]
   ): Record<string, DecoratorMetadata[]> | undefined {
-    if (!prefixes || !prefixes.length) return;
+    if (!prefixes || prefixes.length === 0) return undefined;
 
-    function pushOrCreate(
-      accum: Record<string, DecoratorMetadata[]>,
-      key: string,
-      decorators: DecoratorMetadata[]
-    ): void {
-      if (!decorators || !decorators.length) return;
-      if (!accum[key]) accum[key] = [];
-      accum[key].push(...decorators);
+    const result: Record<string, DecoratorMetadata[]> = {};
+    const properties = Object.getOwnPropertyNames(model);
+
+    for (const propKey of properties) {
+      for (let i = 0; i < prefixes.length; i++) {
+        const decorators = Reflection.getPropertyDecorators(prefixes[i], model, propKey, i !== 0);
+        if (decorators.decorators.length > 0) {
+          if (!result[propKey]) {
+            result[propKey] = [];
+          }
+          result[propKey].push(...decorators.decorators);
+        }
+      }
     }
 
-    return Object.getOwnPropertyNames(model).reduce(
-      (accum: Record<string, never> | undefined, propKey) => {
-        prefixes.forEach((p, index) => {
-          const decorators: {
-            prop: string;
-            decorators: DecoratorMetadata[];
-          } = Reflection.getPropertyDecorators(p, model, propKey, index !== 0);
-          if (!accum) accum = {};
-          pushOrCreate(accum, propKey, decorators.decorators);
-        });
-        return accum;
-      },
-      undefined
-    );
+    return Object.keys(result).length > 0 ? result : undefined;
   }
 
   /**
