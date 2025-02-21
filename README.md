@@ -1,7 +1,7 @@
 ![Banner](./workdocs/assets/Banner.png)
-## Reflection
+## Decaf-ts' Reflection
 
-
+Provides the Reflection apis for decaf-ts
 
 ![Licence](https://img.shields.io/github/license/decaf-ts/reflection.svg?style=plastic)
 ![GitHub language count](https://img.shields.io/github/languages/count/decaf-ts/reflection?style=plastic)
@@ -27,123 +27,50 @@
 ![Node Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbadges%2Fshields%2Fmaster%2Fpackage.json&label=Node&query=$.engines.node&colorB=blue)
 ![NPM Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbadges%2Fshields%2Fmaster%2Fpackage.json&label=NPM&query=$.engines.npm&colorB=purple)
 
-Defaults to module, but exports to CommonJS and ESM.
+Utilitarian library providing the Reflection implementation, currently based on `reflect-metadata`
 
-With documentation, update and release mechanisms and gitlab/github workflows to match;
+Please follow the Contributing guide or the developer's guide to contribute to this library. 
 
-Defines a 'way' to write jsDocs to optimize the output
+All help is appreciated.
 
-Optimized for github in terms of badges. CI is equivalent between Gitlab and Github.
-
-Auto setup on first `npm install`
-
-Will accept a `.token` file containing token valid for private npm dependencies, npm and docker registries
-
-### ***Initial Setup***
-
-#### if you use github
-
-create a new project using this one as a template.
-
-clone it `git clone <project>` and navigate to the root folder `cd <project>`
-
-#### If your project has private dependencies or publishes to private npm registries, create an `.npmrc` containing:
-
-```text
-@<scope1>:registry=https://<ADDRESS>.com/api/v4/packages/npm/
-@<scope2>:registry=https://<ADDRESS>.<DOMAIN>.com/api/v4/packages/npm/
-//<ADDRESS>.<DOMAIN>.com/:_authToken=${TOKEN}
-//<ADDRESS>.<DOMAIN>.com/api/v4/groups/<GROUP_ID>/packages/npm/:_authToken=${TOKEN}
-//<ADDRESS>.<DOMAIN>.com/api/v4/projects/<PROJECT_ID>/packages/npm/:_authToken=${TOKEN}
-```
-
-Changing:
- - <ADDRESS> to `gitlab` or `github` (or other);
- - <DOMAIN> to your domain if any (if you are using plain gitlab or github use empty and take care to remove the extra `.`);
- - <GROUP_ID> to your project's group id (if any). otherwise remove this line
- - <PROJECT_ID> to your project's id
-
-and adding a `.token` file containing your access token to the private registries na repositories.
-
-### Installation
-
-Run `npm install` (or `npm run do-install` if you have private dependencies and a `.token` file) to install the dependencies:
-
-If this is the first time you are running this command it will also:
- - update this repository's dependencies to their latest version;
- - creates a `.token` file which you can leave empty unless you have private dependencies or publish to private registries
- - delete this 'first run script' file and npm call from the `package.json`;
- - try to commit the updated `package.json` and deleted files (having ssh access helps here);
-## Testing
-
-Preconfigured Jest based testing:
-
-- unit tests under the `tests/unit` folder;
-  - include a default bundle test (helps with circular dependencies and such);
-- integration tests under the `tests/integration` folder;
-- stores converage results under `workdocs/coverage`;
-- publishes coverage result to docs;
-- ignores `cli.ts` from coverage since that is an executable file;
-- defines the coverage threshold in `jest.config.ts`;
+Technical documentation can be found [here](decaf-ts-reflection.github.io)
 ## Considerations
  - Setup for a linux based environment (Sorry windows users. use WSL... or just change already);
  - Setup for node 20, but will work at least with 16;
  - Requires docker to build documentation (drawings and PlantUML)
 ### Related
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decorator-validation)](https://github.com/decaf-ts/decorator-validation)
+[![Decorator Validation Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decorator-validation)](https://github.com/decaf-ts/decorator-validation)
+
+[![Decaf-ts Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decaf-ts)](https://github.com/decaf-ts/decaf-ts)
 ### Social
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/decaf-ts/)
-### Scripts
-
-The following npm scripts are available for development:
-
-- `preinstall` - will run only on the first install to trigger the dep update. will self delete;
-- `do-install` - sets a `TOKEN` environment variable to the contents of `.token` and runs npm install (useful when you
-  have private dependencies);
-- `flash-forward` - updates all dependencies. Take care, This may not be desirable is some cases;
-- `reset` - updates all dependencies. Take care, This may not be desirable is some cases;
-- `build` - builds the code (via gulp `gulpfile.js`) in development mode (generates `lib` and `dist` folder);
-- `build:prod` - builds the code (via gulp `gulpfile.js`) in production mode (generates `lib` and `dist` folder);
-- `test` - runs unit tests;
-- `test:integration` - runs it tests;
-- `test:all` - runs all tests;
-- `lint` - runs es lint on the code folder;
-- `lint-fix` - tries to auto-fix the code folder;
-- `prepare-release` - defines the commands to run prior to a new tag (defaults to linting, building production code,
-  running tests and documentation generation);
-- `release` - triggers a new tag being pushed to master (via `./bin/tag_release.sh`);
-- `clean-publish` - cleans the package.json for publishing;
-- `coverage` - runs all test, calculates coverage and generates badges for readme;
-- `drawings` - compiles all DrawIO `*.drawio` files in the `workdocs/drawings` folder to png and moves them to
-  the `workdocs/resources` folder;
-- `uml` - compiles all PlantUML `*.puml` files in the `workdocs/uml` folder to png and moves them to
-  the `workdocs/resources` folder;
-- `docs` - compiles all the coverage, drawings, uml, jsdocs and md docs into a readable web page under `./docs`;
-
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/TiagoVenceslau/)
 ### Repository Structure
 
 ```
-ts-workspace
+reflection
 │
 │   .gitignore              <-- Defines files ignored to git
 │   .npmignore              <-- Defines files ignored by npm
 │   .nmprc                  <-- Defines the Npm registry for this package
-│   .eslintrc.cjs           <-- linting for the project
-│   .prettier.config.cjs    <-- Code style for the project
-│   .gitlab-ci.yml          <-- Gillab CI/CD file
+│   .nmptoken               <-- Defines access token for the Npm registry for this package
+│   .prettierrc             <-- style definitions for the project
+│   .snyk                   <-- vulnerability scan (via snyk) config
+│   .eslint.config.js       <-- linting for the project
 │   gulpfile.js             <-- Gulp build scripts. used for building na other features (eg docs)
 │   jest.config.ts          <-- Tests Configuration file
-│   mdCompile.json          <-- md Documentation generation configuration file
 │   jsdocs.json             <-- jsdoc Documentation generation configuration file
-│   Dockerfile              <-- minimal example of a node service Dockerfile
 │   LICENCE.md              <-- Licence disclamer
+│   mdCompile.json          <-- md Documentation generation configuration file
 │   package.json
 │   package-lock.json
 │   README.md               <-- Readme File dynamically compiled from 'workdocs' via the 'docs' npm script
 │   tsconfig.json           <-- Typescript config file. Is overriden in 'gulpfile.js' 
 │
+└───.github
+│   │   ...                 <-- github workflows and templates
+│   
 └───bin
 │   │   tag_release.sh      <-- Script to help with releases
 │   
@@ -159,13 +86,10 @@ ts-workspace
 │   
 └───workdocs                <-- Folder with all pre-compiled documentation
 │   │───assets              <-- Documentation asset folder
-│   │───badges              <-- Auto generated coverage badges folder
 │   │───coverage            <-- Auto generated coverage results
-│   │───drawings            <-- DrawIO folder. Drawings (*.drawio) here will be processed to generate documentation (requires docker)
-│   │───uml                 <-- PlantUML folder. Diagrams (*.puml) here will be processed to generate documentation (requires docker)
-│   │───tutorials           <-- Tutorial folder
+│   │───tutorials           <-- Tutorial folder (will show up on tutorial section in generated documentation)
 │   │   ...                 <-- Categorized *.md files that are merged to generate the final readme (via md compile)
-│   │   Readme.md           <-- Entry point to the README.md   
+│   │   Readme.md           <-- Entry point to the README.md (will import other referenced md files)  
 │  
 └───dist
 │   │   ...                 <-- Dinamically generated folder containing the bundles for distribution

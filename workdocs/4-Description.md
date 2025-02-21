@@ -1,11 +1,7 @@
-Defaults to module, but exports to CommonJS and ESM.
+Utilitarian library providing the Reflection implementation, currently based on `reflect-metadata`
 
-With documentation, update and release mechanisms and gitlab/github workflows to match;
+Please follow the Contributing guide or the developer's guide to contribute to this library. 
 
-Defines a 'way' to write jsDocs to optimize the output
+All help is appreciated.
 
-Optimized for github in terms of badges. CI is equivalent between Gitlab and Github.
-
-Auto setup on first `npm install`
-
-Will accept a `.token` file containing token valid for private npm dependencies, npm and docker registries
+Technical documentation can be found [here](decaf-ts-reflection.github.io)
