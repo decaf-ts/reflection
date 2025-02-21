@@ -7,6 +7,7 @@
  * @param {string[]} propsToIgnore - A list of properties to ignore on the objects
  *
  * @function isEqual
+ * @memberOf module:reflection.equality
  */
 export function isEqual(
   a: unknown,
@@ -25,7 +26,7 @@ export function isEqual(
   if (Number.isNaN(a) && Number.isNaN(b)) return true;
 
   // Handle primitive types
-  if (typeof a !== 'object') return a === b;
+  if (typeof a !== "object") return a === b;
 
   // Handle Date objects
   if (a instanceof Date && b instanceof Date) {

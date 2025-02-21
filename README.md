@@ -14,10 +14,10 @@ Provides the Reflection apis for decaf-ts
 ![Pull Requests](https://img.shields.io/github/issues-pr-closed/decaf-ts/reflection.svg)
 ![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
 
-![Line Coverage](workdocs/badges/badge-lines.svg)
-![Function Coverage](workdocs/badges/badge-functions.svg)
-![Statement Coverage](workdocs/badges/badge-statements.svg)
-![Branch Coverage](workdocs/badges/badge-branches.svg)
+![Line Coverage](./workdocs/coverage/badge-lines.svg)
+![Function Coverage](./workdocs/coverage/badge-functions.svg)
+![Statement Coverage](./workdocs/coverage/badge-statements.svg)
+![Branch Coverage](./workdocs/coverage/badge-branches.svg)
 
 
 ![Forks](https://img.shields.io/github/forks/decaf-ts/reflection.svg)
@@ -33,7 +33,7 @@ Please follow the Contributing guide or the developer's guide to contribute to t
 
 All help is appreciated.
 
-Technical documentation can be found [here](decaf-ts-reflection.github.io)
+Technical documentation can be found [here](https://decaf-ts.github.io/reflection/)
 ## Considerations
  - Setup for a linux based environment (Sorry windows users. use WSL... or just change already);
  - Setup for node 20, but will work at least with 16;

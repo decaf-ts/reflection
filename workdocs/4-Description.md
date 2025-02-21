@@ -4,4 +4,4 @@ Please follow the Contributing guide or the developer's guide to contribute to t
 
 All help is appreciated.
 
-Technical documentation can be found [here](decaf-ts-reflection.github.io)
+Technical documentation can be found [here](https://decaf-ts.github.io/reflection/)

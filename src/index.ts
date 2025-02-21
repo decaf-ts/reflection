@@ -25,13 +25,6 @@ export * from "./types";
  */
 
 /**
- * @summary Equality
- * @description Provides common reflection based functionality
- * @namespace utils
- * @memberOf module:reflection
- */
-
-/**
  * @summary stores the current package version
  * @description this is how you should document a constant
  * @const VERSION

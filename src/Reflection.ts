@@ -8,8 +8,6 @@ import { isEqual } from "./equality";
  *
  * @class Reflection
  * @static
- *
- * @memberOf module:reflection
  */
 export class Reflection {
   private constructor() {}
@@ -103,7 +101,7 @@ export class Reflection {
     };
 
     do {
-      Object.getOwnPropertyNames(curr).forEach(prop => allProps.add(prop));
+      Object.getOwnPropertyNames(curr).forEach((prop) => allProps.add(prop));
     } while (keepAtIt());
 
     return Array.from(allProps);
@@ -127,7 +125,7 @@ export class Reflection {
       if (key.startsWith(annotationPrefix)) {
         result.push({
           key: key.slice(annotationPrefix.length),
-          props: Reflect.getMetadata(key, target.constructor)
+          props: Reflect.getMetadata(key, target.constructor),
         });
       }
     }
@@ -142,6 +140,7 @@ export class Reflection {
    * @param {string[]} prefixes
    *
    * @static
+   * @memberOf Reflection
    */
   static getAllPropertyDecorators<M extends object>(
     model: M,
@@ -154,7 +153,12 @@ export class Reflection {
 
     for (const propKey of properties) {
       for (let i = 0; i < prefixes.length; i++) {
-        const decorators = Reflection.getPropertyDecorators(prefixes[i], model, propKey, i !== 0);
+        const decorators = Reflection.getPropertyDecorators(
+          prefixes[i],
+          model,
+          propKey,
+          i !== 0
+        );
         if (decorators.decorators.length > 0) {
           if (!result[propKey]) {
             result[propKey] = [];
@@ -207,6 +211,8 @@ export class Reflection {
    * @param {boolean} [ignoreType] defaults to false. decides if the {@link ReflectionKeys.TYPE} is ignored or not
    * @param {boolean} [recursive] defaults to true. decides if it should climb the prototypal tree searching for more decorators on that property
    * @param {DecoratorMetadata[]} [accumulator] used when recursive is true, to cache decorators while it climbs the prototypal tree
+   *
+   * @static
    */
   static getPropertyDecorators(
     annotationPrefix: string,
