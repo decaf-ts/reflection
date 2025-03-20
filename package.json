@@ -16,7 +16,7 @@
     "build:prod": "rimraf ./lib && rimraf ./dist && gulp prod",
     "test": "jest --coverage --testPathPattern=\"/tests/unit\" --passWithNoTests --detectOpenHandles",
     "test:integration": "jest --coverage --testPathPattern=\"/tests/(integration)\" --passWithNoTests --detectOpenHandles",
-    "test:all": "jest --coverage --testPathPattern=\"/tests/(unit|integration)\" --passWithNoTests --detectOpenHandles",
+    "test:all": "jest --coverage --testPathPattern=\"/tests/(unit|integration|bundling)\" --passWithNoTests --detectOpenHandles",
     "lint": "eslint .",
     "lint-fix": "eslint --fix ./src/*",
     "test:circular": "dpdm -T --no-warning --no-tree ./src/index.ts",
