@@ -21,7 +21,7 @@ So if you can, if this project in any way. either by learning something or simpl
 
 ## License
 
-This project is released under the [MIT License](LICENSE.md).
+This project is released under the [LGPL License](LICENSE.md).
 
 #### Disclaimer:
 
