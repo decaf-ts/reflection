@@ -4,6 +4,7 @@ exclude:
   global:
     - dist/**
     - lib/**
+    - bin/**
     - node_modules/**
     - tests/**
     - workdocs/**

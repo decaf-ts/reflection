@@ -6,19 +6,16 @@ Provides the Reflection apis for decaf-ts
 ![Licence](https://img.shields.io/github/license/decaf-ts/reflection.svg?style=plastic)
 ![GitHub language count](https://img.shields.io/github/languages/count/decaf-ts/reflection?style=plastic)
 ![GitHub top language](https://img.shields.io/github/languages/top/decaf-ts/reflection?style=plastic)
-[![Tests](https://github.com/decaf-ts/reflection/actions/workflows/jest-test.yaml/badge.svg)](http://www.pdmfc.com)
-[![CodeQL](https://github.com/starnowski/posmulten/workflows/CodeQL/badge.svg)](https://github.com/decaf-ts/reflection/actions?query=workflow%3ACodeQL)
+
+[![Build & Test](https://github.com/decaf-ts/reflection/actions/workflows/nodejs-build-prod.yaml/badge.svg)](https://github.com/decaf-ts/reflection/actions/workflows/nodejs-build-prod.yaml)
+[![CodeQL](https://github.com/decaf-ts/reflection/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/decaf-ts/reflection/actions/workflows/codeql-analysis.yml)[![Snyk Analysis](https://github.com/decaf-ts/reflection/actions/workflows/snyk-analysis.yaml/badge.svg)](https://github.com/decaf-ts/reflection/actions/workflows/snyk-analysis.yaml)
+[![Pages builder](https://github.com/decaf-ts/reflection/actions/workflows/pages.yaml/badge.svg)](https://github.com/decaf-ts/reflection/actions/workflows/pages.yaml)
+[![.github/workflows/release-on-tag.yaml](https://github.com/decaf-ts/reflection/actions/workflows/release-on-tag.yaml/badge.svg?event=release)](https://github.com/decaf-ts/reflection/actions/workflows/release-on-tag.yaml)
 
 ![Open Issues](https://img.shields.io/github/issues/decaf-ts/reflection.svg)
 ![Closed Issues](https://img.shields.io/github/issues-closed/decaf-ts/reflection.svg)
 ![Pull Requests](https://img.shields.io/github/issues-pr-closed/decaf-ts/reflection.svg)
 ![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
-
-![Line Coverage](./workdocs/coverage/badge-lines.svg)
-![Function Coverage](./workdocs/coverage/badge-functions.svg)
-![Statement Coverage](./workdocs/coverage/badge-statements.svg)
-![Branch Coverage](./workdocs/coverage/badge-branches.svg)
-
 
 ![Forks](https://img.shields.io/github/forks/decaf-ts/reflection.svg)
 ![Stars](https://img.shields.io/github/stars/decaf-ts/reflection.svg)
@@ -27,6 +24,10 @@ Provides the Reflection apis for decaf-ts
 ![Node Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbadges%2Fshields%2Fmaster%2Fpackage.json&label=Node&query=$.engines.node&colorB=blue)
 ![NPM Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbadges%2Fshields%2Fmaster%2Fpackage.json&label=NPM&query=$.engines.npm&colorB=purple)
 
+Documentation available [here](https://decaf-ts.github.io/reflection/)
+
+### Description
+
 Utilitarian library providing the Reflection implementation, currently based on `reflect-metadata`
 
 Please follow the Contributing guide or the developer's guide to contribute to this library. 
@@ -34,69 +35,29 @@ Please follow the Contributing guide or the developer's guide to contribute to t
 All help is appreciated.
 
 Technical documentation can be found [here](https://decaf-ts.github.io/reflection/)
-## Considerations
- - Setup for a linux based environment (Sorry windows users. use WSL... or just change already);
- - Setup for node 20, but will work at least with 16;
- - Requires docker to build documentation (drawings and PlantUML)
+
+### How to Use
+
+- [Initial Setup](./tutorials/For%20Developers.md#_initial-setup_)
+- [Installation](./tutorials/For%20Developers.md#installation)
+
+
+
+
+
+
 ### Related
 
-[![Decorator Validation Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decorator-validation)](https://github.com/decaf-ts/decorator-validation)
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decaf-ts)](https://github.com/decaf-ts/decaf-ts)
 
-[![Decaf-ts Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=decaf-ts&repo=decaf-ts)](https://github.com/decaf-ts/decaf-ts)
 ### Social
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/TiagoVenceslau/)
-### Repository Structure
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/decaf-ts/)
 
-```
-reflection
-│
-│   .gitignore              <-- Defines files ignored to git
-│   .npmignore              <-- Defines files ignored by npm
-│   .nmprc                  <-- Defines the Npm registry for this package
-│   .nmptoken               <-- Defines access token for the Npm registry for this package
-│   .prettierrc             <-- style definitions for the project
-│   .snyk                   <-- vulnerability scan (via snyk) config
-│   .eslint.config.js       <-- linting for the project
-│   gulpfile.js             <-- Gulp build scripts. used for building na other features (eg docs)
-│   jest.config.ts          <-- Tests Configuration file
-│   jsdocs.json             <-- jsdoc Documentation generation configuration file
-│   LICENCE.md              <-- Licence disclamer
-│   mdCompile.json          <-- md Documentation generation configuration file
-│   package.json
-│   package-lock.json
-│   README.md               <-- Readme File dynamically compiled from 'workdocs' via the 'docs' npm script
-│   tsconfig.json           <-- Typescript config file. Is overriden in 'gulpfile.js' 
-│
-└───.github
-│   │   ...                 <-- github workflows and templates
-│   
-└───bin
-│   │   tag_release.sh      <-- Script to help with releases
-│   
-└───docs
-│   │   ...                 <-- Dinamically generated folder, containing the compiled documentation for this repository. generated via the 'docs' npm script
-│   
-└───src
-│   │   ...                 <-- Source code for this repository
-│   
-└───tests
-│   │───unit                <-- Unit tests
-│   └───integration         <-- Integration tests
-│   
-└───workdocs                <-- Folder with all pre-compiled documentation
-│   │───assets              <-- Documentation asset folder
-│   │───coverage            <-- Auto generated coverage results
-│   │───tutorials           <-- Tutorial folder (will show up on tutorial section in generated documentation)
-│   │   ...                 <-- Categorized *.md files that are merged to generate the final readme (via md compile)
-│   │   Readme.md           <-- Entry point to the README.md (will import other referenced md files)  
-│  
-└───dist
-│   │   ...                 <-- Dinamically generated folder containing the bundles for distribution
-│
-└───lib
-    |   ...                 <-- Dinamically generated folder containing the compiled code
-```
+
+
+
+#### Languages
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -115,14 +76,12 @@ I am grateful for any contributions made to this project. Please read [this](./w
 
 The first and easiest way you can support it is by [Contributing](./workdocs/98-Contributing.md). Even just finding a typo in the documentation is important.
 
-Financial support is always welcome and helps keep the both me and the project alive and healthy.
+Financial support is always welcome and helps keep both me and the project alive and healthy.
 
 So if you can, if this project in any way. either by learning something or simply by helping you save precious time, please consider donating.
 
 ## License
 
-This project is released under the [MIT License](LICENSE.md).
+This project is released under the [LGPL License](./LICENSE.md).
 
-#### Disclaimer:
-
-badges found [here](https://dev.to/envoy_/150-badges-for-github-pnk), [here](https://github.com/alexandresanlim/Badges4-README.md-Profile#-social-) and [here](https://github.com/Ileriayo/markdown-badges)
+By developers, for developers...

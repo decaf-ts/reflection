@@ -81,15 +81,6 @@ describe("decorators", () => {
       [],
       any
     >;
-    let mockDec2: SpyInstance<
-      (
-        target: object,
-        propertyKey?: unknown,
-        descriptor?: PropertyDescriptor
-      ) => void,
-      [],
-      any
-    >;
 
     beforeEach(() => {
       jest.resetAllMocks();
@@ -97,11 +88,11 @@ describe("decorators", () => {
       jest.restoreAllMocks();
 
       mockDec1 = jest.spyOn(TestDecorators, "dec1");
-      mockDec2 = jest.spyOn(TestDecorators, "dec2");
     });
 
     it("applies multiple decorators to a class", () => {
       @apply(TestDecorators.dec1(), TestDecorators.dec2())
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       class TestClass {
         constructor() {}
       }

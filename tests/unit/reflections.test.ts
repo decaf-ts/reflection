@@ -97,6 +97,7 @@ describe("Reflections", () => {
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class Child extends Parent {
       @TestDecorators.dec2()
       prop3?: string = undefined;
