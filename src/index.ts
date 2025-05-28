@@ -5,29 +5,15 @@ export * from "./Reflection";
 export * from "./types";
 
 /**
- * @summary Reflection
- * @description Provides common reflection based functionality
+ * @description Provides utilities for TypeScript reflection and metadata manipulation
+ * @summary A comprehensive module for working with reflection in TypeScript, including decorators, type checking, and metadata management
  * @module reflection
  */
 
 /**
- * @summary Decorators
- * @description Provides common reflection based functionality
- * @namespace decorators
- * @memberOf module:reflection
- */
-
-/**
- * @summary Equality
- * @description Provides common reflection based functionality
- * @namespace equality
- * @memberOf module:reflection
- */
-
-/**
- * @summary stores the current package version
- * @description this is how you should document a constant
+ * @description Current version of the reflection package
+ * @summary Stores the semantic version number of the package
  * @const VERSION
- * @memberOf module:ts-workspace
+ * @memberOf module:reflection
  */
 export const VERSION = "##VERSION##";

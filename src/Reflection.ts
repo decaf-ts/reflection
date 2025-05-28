@@ -1,26 +1,61 @@
-import { DecoratorMetadata } from "./types";
+import {
+  ClassDecoratorsList,
+  DecoratorMetadata,
+  FullPropertyDecoratorList,
+  PropertyDecoratorList,
+} from "./types";
 import { ReflectionKeys } from "./constants";
 import { isEqual } from "./equality";
 
 /**
- * @summary Namespace class holding reflection API
- * @description holds the functionality to handle reflection metadata
- *
+ * @description A utility class for handling reflection metadata in TypeScript
+ * @summary Namespace class holding reflection API that provides functionality to handle reflection metadata, type checking, and decorator management
+ * @param {string} annotationPrefix - The prefix used to filter decorators in various methods
+ * @param {object} target - The target object or class to retrieve metadata from
+ * @param {string|symbol} propertyName - The name of the property to retrieve metadata for
+ * @param {boolean} [ignoreType] - Whether to ignore type metadata in certain operations
+ * @param {boolean} [recursive] - Whether to recursively traverse the prototype chain
+ * @param {DecoratorMetadata[]} [accumulator] - Used to accumulate metadata during recursive operations
  * @class Reflection
- * @static
+ * @example
+ * // Get all property decorators with a specific prefix
+ * const model = new MyClass();
+ * const decorators = Reflection.getAllPropertyDecorators(model, 'prefix');
+ *
+ * // Check if a value matches a specific type
+ * const isString = Reflection.checkTypes(value, ['string']);
+ *
+ * // Get all properties of an object including inherited ones
+ * const props = Reflection.getAllProperties(obj, true);
+ *
+ * // Get class decorators with a specific prefix
+ * const classDecorators = Reflection.getClassDecorators('prefix', myClassInstance);
+ *
+ * // Get property type from decorator
+ * const propType = Reflection.getTypeFromDecorator(model, 'propertyName');
+ * @mermaid
+ * sequenceDiagram
+ *   participant Client
+ *   participant Reflection
+ *   participant ReflectAPI
+ *
+ *   Client->>Reflection: getAllPropertyDecorators(model, prefix)
+ *   Reflection->>Reflection: getPropertyDecorators(prefix, model, propKey)
+ *   Reflection->>ReflectAPI: getMetadataKeys(target, propertyName)
+ *   ReflectAPI-->>Reflection: keys[]
+ *   Reflection->>ReflectAPI: getMetadata(key, target, propertyName)
+ *   ReflectAPI-->>Reflection: metadata
+ *   Reflection-->>Client: decorators
  */
 export class Reflection {
   private constructor() {}
 
   /**
-   * @summary Util function to check a type according to a typeName
-   *
-   * @param {any} value
-   * @param {string} acceptedType
-   *
-   * @return {boolean} true for a match, false otherwise
-   *
-   * @static
+   * @description Checks if a value matches a specified type name
+   * @summary Utility function to verify if a value's type matches the provided type name
+   * @param {unknown} value - The value to check the type of
+   * @param {string} acceptedType - The type name to check against
+   * @return {boolean} Returns true if the value matches the accepted type, false otherwise
    */
   private static checkType(value: unknown, acceptedType: string) {
     if (typeof value === acceptedType.toLowerCase()) return true;
@@ -34,25 +69,22 @@ export class Reflection {
   }
 
   /**
-   * @summary Util function to check a type according multiple possibilities
-   *
-   * @param {unknown} value
-   * @param {string[]} acceptedTypes
-   * @return {boolean} true if any is a match, false otherwise
-   *
-   * @static
+   * @description Checks if a value matches any of the specified type names
+   * @summary Utility function to verify if a value's type matches any of the provided type names
+   * @param {unknown} value - The value to check the type of
+   * @param {string[]} acceptedTypes - Array of type names to check against
+   * @return {boolean} Returns true if the value matches any of the accepted types, false otherwise
    */
   static checkTypes(value: unknown, acceptedTypes: string[]) {
     return !acceptedTypes.every((t) => !this.checkType(value, t));
   }
 
   /**
-   * @summary evaluates the type metadata vs the value type
-   *
-   * @param {any} value
-   * @param {string | string[] | {name: string}} types
-   *
-   * @static
+   * @description Evaluates if a value matches the specified type metadata
+   * @summary Compares a value against type metadata to determine if they match
+   * @param {unknown} value - The value to evaluate
+   * @param {string | string[] | {name: string}} types - Type metadata to check against, can be a string, array of strings, or an object with a name property
+   * @return {boolean} Returns true if the value matches the type metadata, false otherwise
    */
   static evaluateDesignTypes(
     value: unknown,
@@ -75,14 +107,11 @@ export class Reflection {
 
   /**
    * @description Retrieves all properties of an object
-   * @summary
-   * if {@param climbTree} it will crawl the prototype tree until it reaches {@param stopAt} (or ends the prototype chain)
-   *
-   * @param {Record<string, unknown>} obj
-   * @param {boolean} [climbTree] default to true
-   * @param {string} [stopAt] defaults to 'Object'
-   *
-   * @static
+   * @summary Collects all property names from an object, optionally including those from its prototype chain
+   * @param {Record<string, unknown>} obj - The object to retrieve properties from
+   * @param {boolean} [climbTree=true] - Whether to crawl up the prototype chain
+   * @param {string} [stopAt="Object"] - The constructor name at which to stop climbing the prototype chain
+   * @return {string[]} An array of all property names found in the object
    */
   static getAllProperties(
     obj: Record<string, unknown>,
@@ -108,18 +137,18 @@ export class Reflection {
   }
 
   /**
-   * @summary Util function to retrieve the Class decorators
-   * @param {string} annotationPrefix
-   * @param {object} target
-   *
-   * @static
+   * @description Retrieves all class decorators with a specific prefix
+   * @summary Utility function to extract class-level decorators that start with a given prefix
+   * @param {string} annotationPrefix - The prefix to filter decorators by
+   * @param {object} target - The class instance to retrieve decorators from
+   * @return {ClassDecoratorsList} An array of objects containing decorator keys and their properties
    */
   static getClassDecorators(
     annotationPrefix: string,
     target: object
-  ): { key: string; props: unknown }[] {
+  ): ClassDecoratorsList {
     const keys: string[] = Reflect.getOwnMetadataKeys(target.constructor);
-    const result: { key: string; props: unknown }[] = [];
+    const result: ClassDecoratorsList = [];
 
     for (const key of keys) {
       if (key.startsWith(annotationPrefix)) {
@@ -134,21 +163,20 @@ export class Reflection {
   }
 
   /**
-   * @summary Retrieves the decorators for an object's properties prefixed by {@param prefixes}
-   *
-   * @param {M} model
-   * @param {string[]} prefixes
-   *
-   * @static
-   * @memberOf Reflection
+   * @description Retrieves all property decorators with specific prefixes for an object
+   * @summary Collects all decorators for an object's properties that start with any of the provided prefixes
+   * @template M - Type of the model object
+   * @param {M} model - The object to retrieve property decorators from
+   * @param {string[]} prefixes - Array of prefixes to filter decorators by
+   * @return {Record<string, DecoratorMetadata[]> | undefined} A record mapping property names to their decorators, or undefined if none found
    */
   static getAllPropertyDecorators<M extends object>(
     model: M,
     ...prefixes: string[]
-  ): Record<string, DecoratorMetadata[]> | undefined {
+  ): PropertyDecoratorList | undefined {
     if (!prefixes || prefixes.length === 0) return undefined;
 
-    const result: Record<string, DecoratorMetadata[]> = {};
+    const result: PropertyDecoratorList = {};
     const properties = Object.getOwnPropertyNames(model);
 
     for (const propKey of properties) {
@@ -172,26 +200,22 @@ export class Reflection {
   }
 
   /**
-   * @summary gets the prop type from the decorator
-   * @description uses the metadata to discover the type of the object stored under model[proKey]
-   *
-   * @param {any} model
-   * @param {string | symbol} propKey
-   * @return {string | undefined}
-   *
-   * @static
+   * @description Uses metadata to discover the type of a property from its decorator
+   * @summary Extracts the type information from a property's decorator metadata
+   * @param {object} model - The object containing the property
+   * @param {string | symbol} propKey - The key of the property to get the type for
+   * @return {string | undefined} The type name of the property, or undefined if not found or if the type is Function
    */
   static getTypeFromDecorator(
     model: object,
     propKey: string | symbol
   ): string | undefined {
-    const decorators: { prop: string | symbol; decorators: unknown[] } =
-      Reflection.getPropertyDecorators(
-        ReflectionKeys.TYPE,
-        model,
-        propKey,
-        false
-      );
+    const decorators: PropertyDecoratorList = Reflection.getPropertyDecorators(
+      ReflectionKeys.TYPE,
+      model,
+      propKey,
+      false
+    );
     if (!decorators || !decorators.decorators) return;
 
     const typeDecorator: DecoratorMetadata =
@@ -203,16 +227,37 @@ export class Reflection {
   }
 
   /**
-   * @summary Util function to retrieve the decorators for the provided Property
+   * @description Retrieves all decorators for a specific property
+   * @summary Utility function to extract property-level decorators that start with a given prefix, with options for recursive prototype chain traversal
+   * @param {string} annotationPrefix - The prefix to filter decorators by
+   * @param {object} target - The object containing the property
+   * @param {string | symbol} propertyName - The name of the property to retrieve decorators for
+   * @param {boolean} [ignoreType=false] - Whether to ignore the TYPE metadata key
+   * @param {boolean} [recursive=true] - Whether to climb the prototype chain looking for more decorators
+   * @param {DecoratorMetadata[]} [accumulator] - Used internally to accumulate decorators during recursive calls
+   * @return {FullPropertyDecoratorList} An object containing the property name and its decorators
+   * @mermaid
+   * sequenceDiagram
+   *   participant Client
+   *   participant Reflection
+   *   participant InnerFunction
+   *   participant ReflectAPI
    *
-   * @param {string} annotationPrefix
-   * @param {object} target
-   * @param {string | symbol} propertyName
-   * @param {boolean} [ignoreType] defaults to false. decides if the {@link ReflectionKeys.TYPE} is ignored or not
-   * @param {boolean} [recursive] defaults to true. decides if it should climb the prototypal tree searching for more decorators on that property
-   * @param {DecoratorMetadata[]} [accumulator] used when recursive is true, to cache decorators while it climbs the prototypal tree
+   *   Client->>Reflection: getPropertyDecorators(prefix, target, propName)
+   *   Reflection->>InnerFunction: getPropertyDecoratorsForModel(prefix, target, propName)
+   *   InnerFunction->>ReflectAPI: getMetadataKeys(target, propertyName)
+   *   ReflectAPI-->>InnerFunction: keys[]
+   *   InnerFunction->>ReflectAPI: getMetadata(key, target, propertyName)
+   *   ReflectAPI-->>InnerFunction: metadata
+   *   InnerFunction-->>Reflection: {prop, decorators}
    *
-   * @static
+   *   alt recursive && not Object.prototype
+   *     Reflection->>Reflection: getPropertyDecorators(prefix, prototype, propName, true, recursive, result.decorators)
+   *   else
+   *     Reflection->>Reflection: trim(result.decorators)
+   *   end
+   *
+   *   Reflection-->>Client: {prop, decorators}
    */
   static getPropertyDecorators(
     annotationPrefix: string,
@@ -221,7 +266,7 @@ export class Reflection {
     ignoreType: boolean = false,
     recursive = true,
     accumulator?: DecoratorMetadata[]
-  ): { prop: string; decorators: DecoratorMetadata[] } {
+  ): FullPropertyDecoratorList {
     const getPropertyDecoratorsForModel = function (
       annotationPrefix: string,
       target: object,
@@ -287,7 +332,7 @@ export class Reflection {
 
     if (!recursive || Object.getPrototypeOf(target) === Object.prototype) {
       return {
-        prop: result.prop,
+        prop: result.prop as any,
         decorators: trim(result.decorators),
       };
     }

@@ -1,13 +1,57 @@
 /**
- * @summary Deep Object Comparison
- * @description Enhanced algorithm for deep comparison with optional ignored properties
- *
+ * @description Enhanced algorithm for deep comparison of any two values with optional ignored properties
+ * @summary Performs a deep equality check between two values, handling various types including primitives, objects, arrays, dates, and more
  * @param {unknown} a - First value to compare
  * @param {unknown} b - Second value to compare
- * @param {string[]} propsToIgnore - A list of properties to ignore on the objects
- *
+ * @param {string[]} propsToIgnore - A list of property names to ignore during comparison
+ * @return {boolean} Returns true if the values are deeply equal, false otherwise
  * @function isEqual
- * @memberOf module:reflection.equality
+ * @mermaid
+ * sequenceDiagram
+ *   participant Caller
+ *   participant isEqual
+ *   participant Recursion
+ *   
+ *   Caller->>isEqual: isEqual(a, b, propsToIgnore)
+ *   Note over isEqual: Check simple cases (identity, null, primitives)
+ *   
+ *   alt a === b
+ *     isEqual-->>Caller: true (with special case for +0/-0)
+ *   else a or b is null
+ *     isEqual-->>Caller: a === b
+ *   else different types
+ *     isEqual-->>Caller: false
+ *   else both NaN
+ *     isEqual-->>Caller: true
+ *   else primitive types
+ *     isEqual-->>Caller: a === b
+ *   else both Date objects
+ *     isEqual-->>Caller: Compare timestamps
+ *   else both RegExp objects
+ *     isEqual-->>Caller: Compare string representations
+ *   else both Error objects
+ *     isEqual-->>Caller: Compare name and message
+ *   else both Arrays
+ *     Note over isEqual: Check length
+ *     loop For each element
+ *       isEqual->>Recursion: isEqual(a[i], b[i], propsToIgnore)
+ *     end
+ *   else both Maps or Sets
+ *     Note over isEqual: Compare size and entries
+ *   else both TypedArrays
+ *     Note over isEqual: Compare byte by byte
+ *   else both Objects
+ *     Note over isEqual: Filter keys by propsToIgnore
+ *     Note over isEqual: Compare key counts
+ *     loop For each key
+ *       isEqual->>Recursion: isEqual(a[key], b[key], propsToIgnore)
+ *     end
+ *     Note over isEqual: Check Symbol properties
+ *     Note over isEqual: Compare prototypes
+ *   end
+ *   
+ *   isEqual-->>Caller: Comparison result
+ * @memberOf module:reflection
  */
 export function isEqual(
   a: unknown,
