@@ -16,7 +16,7 @@ export function metadata<V>(key: string, value: V) {
     propertyKey?: string | symbol | unknown,
     descriptor?: PropertyDescriptor
   ) => {
-    if (descriptor) {
+    if (descriptor && typeof descriptor.value === "function") {
       Reflect.defineMetadata(key, value, descriptor.value as object); // method
     } else if (propertyKey) {
       Reflect.defineMetadata(
