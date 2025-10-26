@@ -56,8 +56,15 @@
   ],
   "keywords": [
     "reflection",
+    "metadata",
+    "decaf",
     "typescript",
-    "ts"
+    "decorators",
+    "introspection",
+    "runtime",
+    "type-info",
+    "annotations",
+    "design-time"
   ],
   "author": "Tiago Venceslau and Contributors",
   "license": "MIT",
